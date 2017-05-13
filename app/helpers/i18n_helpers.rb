@@ -26,6 +26,23 @@ module I18nHelpers
     model_class.human_attribute_name(attribute)
   end
 
+  # Returns translated name for the given +attribute+ in pluralized form.
+  #
+  # This is the pluralization version of t_attr.
+  #
+  # There needs to be one and other keys in:
+  # de.activerecord.attributes.patient.bill.one = Rechnung
+  # de.activerecord.attributes.patient.bill.other = Rechnungen
+  #
+  # Example:
+  #   t_attr('bill', Patient) => 'Rechnung'
+  #   t_attr('bill')          => 'Rechnungen' # when called in patients_controller views
+  #
+  def t_attrs(attribute, model = nil)
+    return t_attr(attribute, model).pluralize if locale.to_s == 'en'
+    I18n.translate(attribute, :scope => [:activerecord, :attributes, get_model_key(model)], count: 2)
+  end
+
   # Returns translated name for the given +model+.
   #
   # If no +model+ is given, it uses the controller name to guess the model by
@@ -49,6 +66,32 @@ module I18nHelpers
       model_name = model.class.name.underscore
     end
     I18n::translate(model_name, :scope => [:activerecord, :models], count: count)
+  end
+
+  # Returns translated name for the given +model+ pluralized.
+  #
+  # This is the pluralization version of t_model.
+  #
+  # There needs to be one and other keys in:
+  # de.activerecord.models.account.one = Konto
+  # de.activerecord.models.account.other = Konten
+  #
+  # Example:
+  #   t_models(Account)     => 'Konten'
+  #   t_models              => 'Konten' # when called in patients_controller views
+  #
+  def t_models(model = nil)
+    return t_model(model).pluralize if locale.to_s == 'en'
+    I18n.translate(get_model_key(model), :scope => [:activerecord, :models], count: 2)
+  end
+  alias :t_titles :t_models
+
+  def get_model_key(model)
+    return model.model_name.i18n_key if model.is_a? ActiveModel::Naming
+    return model.class.model_name.i18n_key if model.class.is_a? ActiveModel::Naming
+    return model.name.underscore if model.is_a? Class
+    return controller_name.singularize if model.nil?
+    model.class.name.underscore
   end
 
   # Returns translated title for current +action+ on +model+.
