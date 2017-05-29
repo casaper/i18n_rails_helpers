@@ -1,6 +1,6 @@
-# I18nRailsHelpers
+# I18nHelpers
 
-[![Build Status](https://secure.travis-ci.org/huerlisi/i18n_rails_helpers.png)](http://travis-ci.org/huerlisi/i18n_rails_helpers)
+*A fork of [huerlisi/i18n_rails_helpers](https://github.com/huerlisi/i18n_rails_helpers)*
 
 Rails i18n view helpers for things like crud actions, models and and attributes.
 

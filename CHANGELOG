@@ -1,3 +1,9 @@
+2.0.2.beta1
+=====
+* Forked to own gem from https://github.com/huerlisi/i18n_rails_helpers
+* Removed all undocumented list link, icon and bootstrap helpers
+* Added pluralization feature to t_attr and t_model
+
 2.0.0
 =====
 FIXES:

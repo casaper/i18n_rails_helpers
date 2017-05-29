@@ -1,10 +1,10 @@
 module I18nHelpers
   # Returns translated identifier
   def t_page_head
-    if params[:id] and resource
-      return "%s %s" % [t_title, resource.to_s]
+    if params[:id] && resource
+      format('%s %s', t_title, resource.to_s)
     else
-      return t_title
+      t_title
     end
   end
 
@@ -93,13 +93,13 @@ module I18nHelpers
   #
   def t_title(action = nil, model = nil)
     action ||= action_name
-    if model
-      context = model.name.pluralize.underscore
-    else
-      context = controller_name.underscore
-    end
+    context = if model
+                model.name.pluralize.underscore
+              else
+                controller_name.underscore
+              end
 
-    I18n::translate("#{context}.#{action}.title", :default => [:"crud.title.#{action}"], :model => t_model(model))
+    I18n.translate("#{context}.#{action}.title", default: [:"crud.title.#{action}"], model: t_model(model))
   end
   alias :t_crud :t_title
 
@@ -116,7 +116,7 @@ module I18nHelpers
   #
   def t_action(action = nil, model = nil)
     action ||= action_name
-    I18n::translate(action, :scope => 'crud.action', :model => t_model(model))
+    I18n.translate(action, scope: 'crud.action', model: t_model(model))
   end
 
   # Returns translated deletion confirmation for +record+.
@@ -127,7 +127,7 @@ module I18nHelpers
   #   t_confirm_delete(@account) => 'Konto Kasse wirklich löschen'
   #
   def t_confirm_delete(record)
-    I18n::translate('messages.confirm_delete', :model => t_model(record), :record => record.to_s)
+    I18n.translate('messages.confirm_delete', model: t_model(record), record: record.to_s)
   end
 
   # Returns translated drop down field prompt for +model+.
@@ -138,6 +138,6 @@ module I18nHelpers
   #   t_select_prompt(Account) => 'Konto auswählen'
   #
   def t_select_prompt(model = nil)
-    I18n::translate('messages.select_prompt', :model => t_model(model))
+    I18n.translate('messages.select_prompt', model: t_model(model))
   end
 end

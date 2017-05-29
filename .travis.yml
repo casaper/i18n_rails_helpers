@@ -5,7 +5,6 @@ sudo: false
 script: "bundle exec rake"
 
 rvm:
-  - 1.9.3
   - 2.2.0
 
 env:
@@ -16,6 +15,3 @@ before_script:
 
 bundler_args: "--binstubs --without tools"
 
-# IRC notification
-notifications:
-  irc: "irc.freenode.org#cyt"
