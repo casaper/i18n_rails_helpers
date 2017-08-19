@@ -8,7 +8,7 @@ require "action_view/railtie"
 require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
-require "i18n_helpers"
+require "i18n_rails_helpers"
 
 module Dummy
   class Application < Rails::Application
